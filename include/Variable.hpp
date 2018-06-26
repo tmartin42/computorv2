@@ -9,6 +9,7 @@
 
 
 enum	TYPE { NOTYPE, RATIONAL, INDE, COMPLEX, MATRIX, POLY };
+enum	CALC { UNKNOWN, ADD, MINUS, MUL, DIV, MOD, SCAL, POW };
 
 class Variable {
 	public:
@@ -27,8 +28,11 @@ class Variable {
 
         double  getRat() const;
         void    setRat(double newVal);
-
-        Variable    addToMatrix(Variable const &rhs) const;
+        std::vector< std::vector<Variable> >  getMat() const;
+        void    setMat(std::vector< std::vector<Variable> > matrix);
+        Variable    scalMatToMat(std::vector< std::vector<Variable> > rhsMat);
+        Variable    calcMatToMat(std::vector< std::vector<Variable> > rhsMat, CALC calc) const;
+        Variable    calcRatToMatrix(Variable const &rhs, CALC calc) const;
         Variable    operator+( Variable const &rhs ) ;
         Variable    operator-( Variable const &rhs ) ;
         Variable    operator*( Variable const &rhs ) ;
@@ -40,7 +44,5 @@ class Variable {
 		TYPE 	_type;
         std::vector< std::vector<Variable> > _matrix;
 };
-
-
 
 #endif
