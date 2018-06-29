@@ -135,6 +135,30 @@ Variable    Variable::scalMatToMat(std::vector< std::vector<Variable> > rhsMat) 
     return Variable(res);
 }
 
+Variable   Variable::poww(int poww) {
+    if (getType() == RATIONAL) {
+        double mul = _val;
+        double ret = _val;
+        for (int k = 0; k < poww - 1; k++) {
+            ret = ret * mul;
+        }
+        return Variable(ret);
+    } else if (getType() == MATRIX) {
+        std::vector< std::vector<Variable> > ret = _matrix;
+        for (size_t i = 0; i < ret.size(); i++)  {
+            for (size_t j = 0; j < ret[i].size(); j++) {
+                Variable mul = ret[i][j];
+                for (int k = 0; k < poww - 1; k++) {
+                    ret[i][j] = ret[i][j] * mul;
+                }
+            }
+        }
+        return Variable(ret);
+    }
+    throw std::exception();
+    return Variable(-1);
+}
+
 Variable   Variable::operator+( Variable  const &rhs )  {
 
 
@@ -186,6 +210,7 @@ Variable    Variable::operator/( Variable const &rhs )  {
     if (rhs.getType() == RATIONAL && getType() == RATIONAL) {
         std::cout << _val << " / " << rhs.getRat() << std::endl;
         return Variable(_val / rhs.getRat());
+    } else if () {
     } else if ((rhs.getType() == RATIONAL && getType() == MATRIX) || (rhs.getType() == MATRIX && getType() == RATIONAL)) {
         if (getType() == MATRIX)
             return calcRatToMatrix(rhs, DIV);

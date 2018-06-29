@@ -20,9 +20,9 @@ class Rational : public AVar {
 
         double  getVal() const;
         void    setVal(double newVal);
-
-        AVar    &operator+( AVar  &rhs ) ;
-        AVar    &operator-( AVar  &rhs ) ;
+        AVar    *Add( AVar *rhs, int toDelete = 0 ) 
+      /*  AVar    &operator+( AVar  &rhs ) ;
+        AVar    &operator-( AVar  &rhs ) ;*/
      //   AVar   &operator/( AVar  &rhs ) ;
       //  AVar   &operator*( AVar  &rhs ) ;
      //   AVar    &operator%( AVar  &rhs ) ;

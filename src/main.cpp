@@ -75,7 +75,8 @@ int main (void) {
 //   std::cout << std::endl;
 
   try {
-    (mat.scalMatToMat(matt.getMat())).display();
+    mat.display();
+    (mat.poww(2)).display();
   } catch (std::exception e) {
     std::cout << "error" << std::endl;
   }

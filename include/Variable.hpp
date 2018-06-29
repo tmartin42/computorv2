@@ -33,6 +33,7 @@ class Variable {
         Variable    scalMatToMat(std::vector< std::vector<Variable> > rhsMat);
         Variable    calcMatToMat(std::vector< std::vector<Variable> > rhsMat, CALC calc) const;
         Variable    calcRatToMatrix(Variable const &rhs, CALC calc) const;
+        Variable    poww(int poww);
         Variable    operator+( Variable const &rhs ) ;
         Variable    operator-( Variable const &rhs ) ;
         Variable    operator*( Variable const &rhs ) ;
