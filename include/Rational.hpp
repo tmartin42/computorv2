@@ -13,6 +13,7 @@ class Rational : public AVar {
 		virtual ~Rational();
 
 		Rational& operator=(Rational const& rhs);
+		Rational& operator=(AVar const& rhs);
         
 		TYPE			getType() const;
 
@@ -20,7 +21,10 @@ class Rational : public AVar {
 
         double  getVal() const;
         void    setVal(double newVal);
-        AVar    *Add( AVar *rhs, int toDelete = 0 ) 
+		AVar    *add( AVar *rhs, int toDelete = 0 );
+		AVar    *add( double rhs, int toDelete = 0 );
+		AVar    *mul( AVar *rhs, int toDelete = 0 );
+		AVar    *mul( double rhs, int toDelete = 0 ); 
       /*  AVar    &operator+( AVar  &rhs ) ;
         AVar    &operator-( AVar  &rhs ) ;*/
      //   AVar   &operator/( AVar  &rhs ) ;

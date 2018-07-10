@@ -1,10 +1,13 @@
 #include <iostream>
-#include "Variable.hpp"
+#include "AVar.hpp"
+#include "Rational.hpp"
+#include "Matrix.hpp"
 
 int main (void) {
 
-    Variable lol =  Variable(2);
-   Variable kek =  Variable(3);
+    Rational lol =  Rational(2);
+   Rational kek =  Rational(3);
+  
 /*
    std::vector< std::vector<Variable> > vec;
 
@@ -40,43 +43,42 @@ int main (void) {
    Variable matt = Variable(vecb);
 */
 
-   std::vector< std::vector<Variable> > vec;
+   std::vector< std::vector<Rational> > vec;
 
-    Variable myints1[] = {Variable(2), Variable(5), Variable(6)};
-    Variable myints2[] = {Variable(3),Variable(3), Variable(9)};
+    Rational myints1[] = {Rational(2), Rational(5), Rational(6)};
+    Rational myints2[] = {Rational(3),Rational(3), Rational(9)};
 
-    std::vector<Variable> vec1;
-    vec1.push_back(Variable(1));
-    vec1.push_back(Variable(2));
+    std::vector<Rational> vec1;
+    vec1.push_back(Rational(1));
+    vec1.push_back(Rational(2));
   //  vec1.push_back(Variable(6));
-    std::vector<Variable>  vec2;
-    vec2.push_back(Variable(45));
-    vec2.push_back(Variable(22));
+    std::vector<Rational>  vec2;
+    vec2.push_back(Rational(45));
+    vec2.push_back(Rational(22));
     //vec2.push_back(Variable(9));
     vec.push_back(vec1);
     vec.push_back(vec2);
-   Variable mat = Variable(vec);
+   Matrix mat = Matrix(vec);
 
 
 
-   std::vector< std::vector<Variable> > vecb;
+   std::vector< std::vector<Rational> > vecb;
 
-    std::vector<Variable> vec3;
-    vec3.push_back(Variable(99));
-    vec3.push_back(Variable(42));
-    vec3.push_back(Variable(12));
-    std::vector<Variable>  vec4;
-    vec4.push_back(Variable(30));
-    vec4.push_back(Variable(21));
-    vec4.push_back(Variable(10));
+    std::vector<Rational> vec3;
+    vec3.push_back(Rational(99));
+    vec3.push_back(Rational(42));
+    vec3.push_back(Rational(12));
+    std::vector<Rational>  vec4;
+    vec4.push_back(Rational(30));
+    vec4.push_back(Rational(21));
+    vec4.push_back(Rational(10));
     vecb.push_back(vec3);
     vecb.push_back(vec4);
-   Variable matt = Variable(vecb);
+    Matrix matt = Matrix(vecb);
 //   std::cout << std::endl;
 
   try {
     mat.display();
-    (mat.poww(2)).display();
   } catch (std::exception e) {
     std::cout << "error" << std::endl;
   }

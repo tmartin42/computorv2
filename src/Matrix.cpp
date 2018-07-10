@@ -45,7 +45,7 @@ void    Matrix::display() const {
 }
 
 
-AVar    Matrix::scalMatToMat( AVar *rhs, int toDelete)  {
+AVar    *Matrix::scalMatToMat( AVar *rhs, int toDelete)  {
     std::vector< std::vector< Rational *> > rhsMat = dynamic_cast<Matrix *>(rhs)->getMat();
     if (_matrix[0].size() != rhsMat.size())
         throw std::exception();
@@ -56,21 +56,21 @@ AVar    Matrix::scalMatToMat( AVar *rhs, int toDelete)  {
     	for (size_t k = 0; k < rhsMat[0].size(); k++) {
             line.push_back(new Rational(0));
     	    for (size_t j = 0; j < rhsMat.size(); j++) {
-                line[k] = line[k] + _matrix[i][j] * rhsMat[j][k];
+                line[k] = dynamic_cast<Rational *>(line[k]->add(_matrix[i][j]->mul(rhsMat[j][k], 0), 1));
             }
         }
-        res.push_back(line);
-    }  
-    return Variable(res);
+        resM.push_back(line);
+    } 
+    del(rhs, toDelete);
+    return new Matrix(resM);
 }
 
-AVar    *Matrix::Add( AVar *rhs, int toDelete ) {
+AVar    *Matrix::add( AVar *rhs, int toDelete ) {
     if (rhs->getType() == RATIONAL) {
         std::vector< std::vector< Rational *> > resM = getMat();
-		double val = dynamic_cast<Rational *>(rhs)->getVal();
         for (size_t i = 0; i < resM.size(); i++)  {
             for (size_t j = 0; j < resM[i].size(); j++) {
-                resM[i][j] = resM[i][j]->add(rhs->getVal(), 0);
+                resM[i][j] = dynamic_cast<Rational *>(resM[i][j]->add(rhs, 0));
             }
         }
         Matrix *res = new Matrix(resM);
@@ -86,7 +86,7 @@ AVar    *Matrix::Add( AVar *rhs, int toDelete ) {
 
         for (size_t i = 0; i < resM.size(); i++)  {
             for (size_t j = 0; j < resM[i].size(); j++) {
-                resM[i][j] = resM[i][j]->add(rhsMat[i][j]->getVal(), 0);
+                resM[i][j] = dynamic_cast<Rational *>(resM[i][j]->add(rhsMat[i][j], 0));
             }
         }
         Matrix *res = new Matrix(resM);
@@ -95,6 +95,76 @@ AVar    *Matrix::Add( AVar *rhs, int toDelete ) {
     }
     del(rhs, toDelete);
     return new Rational(-1);
+    /*else if (rhs.getType() == MATRIX && getType() == MATRIX) {
+        return calcMatToMat(rhs.getMat(), ADD);
+    }*/
+} 
+
+
+AVar    *Matrix::add( double rhs, int toDelete ) {
+        std::vector< std::vector< Rational *> > resM = getMat();
+        for (size_t i = 0; i < resM.size(); i++)  {
+            for (size_t j = 0; j < resM[i].size(); j++) {
+                resM[i][j] = dynamic_cast<Rational *>(resM[i][j]->add(rhs, 0));
+            }
+        }
+        Matrix *res = new Matrix(resM);
+        
+        if (toDelete != 0 && toDelete != 2)
+            delete this;
+        return res;
+    /*else if (rhs.getType() == MATRIX && getType() == MATRIX) {
+        return calcMatToMat(rhs.getMat(), ADD);
+    }*/
+} 
+AVar    *Matrix::mul( AVar *rhs, int toDelete ) {
+    if (rhs->getType() == RATIONAL) {
+        std::vector< std::vector< Rational *> > resM = getMat();
+        for (size_t i = 0; i < resM.size(); i++)  {
+            for (size_t j = 0; j < resM[i].size(); j++) {
+                resM[i][j] = dynamic_cast<Rational *>(resM[i][j]->mul(rhs, 0));
+            }
+        }
+        Matrix *res = new Matrix(resM);
+        del(rhs, toDelete);
+        return res;
+    } else if (rhs->getType() == MATRIX) {
+        std::vector< std::vector< Rational *> > rhsMat = dynamic_cast<Matrix *>(rhs)->getMat();
+		if (_matrix.size() != rhsMat.size() || _matrix[0].size() != rhsMat[0].size()) {
+			std::cout << _matrix.size() << " " << rhsMat.size() << ", " << _matrix[0].size() << " " << rhsMat[0].size() <<std::endl;
+			throw std::exception();
+		}
+        std::vector< std::vector< Rational *> > resM = getMat();
+
+        for (size_t i = 0; i < resM.size(); i++)  {
+            for (size_t j = 0; j < resM[i].size(); j++) {
+                resM[i][j] = dynamic_cast<Rational *>(resM[i][j]->mul(rhsMat[i][j], 0));
+            }
+        }
+        Matrix *res = new Matrix(resM);
+        del(rhs, toDelete);
+        return res;
+    }
+    del(rhs, toDelete);
+    return new Rational(-1);
+    /*else if (rhs.getType() == MATRIX && getType() == MATRIX) {
+        return calcMatToMat(rhs.getMat(), ADD);
+    }*/
+} 
+
+
+AVar    *Matrix::mul( double rhs, int toDelete ) {
+        std::vector< std::vector< Rational *> > resM = getMat();
+        for (size_t i = 0; i < resM.size(); i++)  {
+            for (size_t j = 0; j < resM[i].size(); j++) {
+                resM[i][j] = dynamic_cast<Rational *>(resM[i][j]->mul(rhs, 0));
+            }
+        }
+        Matrix *res = new Matrix(resM);
+        
+        if (toDelete != 0 && toDelete != 2)
+            delete this;
+        return res;
     /*else if (rhs.getType() == MATRIX && getType() == MATRIX) {
         return calcMatToMat(rhs.getMat(), ADD);
     }*/

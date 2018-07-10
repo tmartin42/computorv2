@@ -18,8 +18,14 @@ class Matrix : public AVar {
 
 		std::vector< std::vector< Rational *> > getMat();
 		void		setMat(std::vector< std::vector< Rational *> > matrix);
+		AVar    	*scalMatToMat( AVar *rhs, int toDelete);
+        void			display() const;
+		AVar    *add( AVar *rhs, int toDelete = 0 );
+		AVar    *add( double rhs, int toDelete = 0 ); 
+		AVar    *mul( AVar *rhs, int toDelete = 0 );
+		AVar    *mul( double rhs, int toDelete = 0 ); 
 
-        virtual	void			display() const;
+
 
 	private:
 		std::vector< std::vector< Rational *> > _matrix;

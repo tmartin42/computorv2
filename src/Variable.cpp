@@ -210,7 +210,7 @@ Variable    Variable::operator/( Variable const &rhs )  {
     if (rhs.getType() == RATIONAL && getType() == RATIONAL) {
         std::cout << _val << " / " << rhs.getRat() << std::endl;
         return Variable(_val / rhs.getRat());
-    } else if () {
+   
     } else if ((rhs.getType() == RATIONAL && getType() == MATRIX) || (rhs.getType() == MATRIX && getType() == RATIONAL)) {
         if (getType() == MATRIX)
             return calcRatToMatrix(rhs, DIV);
